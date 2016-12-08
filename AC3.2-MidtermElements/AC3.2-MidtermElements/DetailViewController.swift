@@ -26,6 +26,7 @@ class DetailViewController: UIViewController {
             weightLabel.text = String(e.weight)
             nameLabel.text = e.name
             symbolLabel.text = e.symbol
+            
             descriptionLabel.text = "Boiling Point: \(e.boiling?.description ?? "N/A")\nMelting Point: \(e.melting?.description ?? "N/A")\nYear Discovered: \(e.yearDiscovered)\nElectrons: \(e.electrons?.description ?? "N/A")\nDensity: \(e.density?.description ?? "N/A")\nCrust Percent: \(e.crustPercent?.description ?? "N/A")\n Ion Energy: \(e.ionEnergy?.description ?? "N/A")"
             APIRequestManager.manager.getData(endPoint: "https://s3.amazonaws.com/ac3.2-elements/\(e.symbol).png") { (data: Data?) in
                 if let d = data {
@@ -36,5 +37,8 @@ class DetailViewController: UIViewController {
                 }
             }
         }
+    }
+    @IBAction func favouritedButtonPressed(_ sender: UIBarButtonItem) {
+        APIRequestManager.manager.postRequest(endPoint: "https://api.fieldbook.com/v1/58488d40b3e2ba03002df662/favorites", data: ["my_name":"Liam 'Fuck Trump' Kane", "favorite_element":"\(element!.name)"])
     }
 }
